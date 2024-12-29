@@ -1,10 +1,10 @@
-import React, {useState} from "react";
-import {Image, StyleSheet, Text, TextInput, TouchableOpacity} from "react-native";
-import {useRouter} from "expo-router";
+import React, { useState } from "react";
+import { Image, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
+import { useRouter } from "expo-router";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {ThemedView} from "@/components/ThemedView";
-import {Button, Dialog, PaperProvider, Portal} from "react-native-paper";
+import { ThemedView } from "@/components/ThemedView";
+import { Button, Dialog, PaperProvider, Portal } from "react-native-paper";
 import API_URL from "../../config/config";
 
 export default function LoginScreen() {
@@ -50,6 +50,7 @@ export default function LoginScreen() {
                     value={username}
                     onChangeText={setUsername}
                     autoCapitalize="none"
+                    placeholderTextColor="#aaa"
                 />
                 <TextInput
                     style={styles.input}
@@ -57,6 +58,7 @@ export default function LoginScreen() {
                     value={password}
                     onChangeText={setPassword}
                     secureTextEntry
+                    placeholderTextColor="#aaa"
                 />
                 <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
                     <Text style={styles.loginButtonText}>Login</Text>
@@ -86,7 +88,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         padding: 16,
-        backgroundColor: "#f9f9f9",
+        backgroundColor: "#001f3f", 
     },
     logo: {
         width: 150,
@@ -95,52 +97,53 @@ const styles = StyleSheet.create({
         resizeMode: "contain",
     },
     title: {
-        fontSize: 24,
+        fontSize: 28,
         fontWeight: "bold",
-        marginBottom: 8,
-        color: "#333",
+        marginBottom: 12,
+        color: "#FFD700",
     },
     subtitle: {
-        fontSize: 16,
+        fontSize: 18,
         marginBottom: 24,
-        color: "#666",
+        color: "#FFFFFF", 
     },
     input: {
         width: "100%",
-        height: 48,
-        borderColor: "#ccc",
+        height: 50,
+        borderColor: "#FFD700", 
         borderWidth: 1,
-        borderRadius: 8,
+        borderRadius: 10,
         paddingHorizontal: 12,
         marginBottom: 16,
-        backgroundColor: "#fff",
+        backgroundColor: "#001f3f", 
+        color: "#FFFFFF", 
     },
     loginButton: {
         width: "100%",
-        height: 48,
-        backgroundColor: "#007BFF",
-        borderRadius: 8,
+        height: 50,
+        backgroundColor: "#FFD700", 
+        borderRadius: 10,
         justifyContent: "center",
         alignItems: "center",
         marginBottom: 16,
     },
     loginButtonText: {
-        color: "#fff",
-        fontSize: 16,
+        color: "#001f3f", 
+        fontSize: 18,
         fontWeight: "600",
     },
     registerButton: {
         width: "100%",
-        height: 48,
+        height: 50,
         borderWidth: 1,
-        borderColor: "#007BFF",
-        borderRadius: 8,
+        borderColor: "#FFD700", 
+        borderRadius: 10,
         justifyContent: "center",
         alignItems: "center",
     },
     registerButtonText: {
-        color: "#007BFF",
-        fontSize: 16,
+        color: "#FFD700", 
+        fontSize: 18,
         fontWeight: "600",
     },
 });

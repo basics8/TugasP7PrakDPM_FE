@@ -77,7 +77,7 @@ const TodosScreen = () => {
             <ThemedView style={styles.container}>
                 <ThemedText style={styles.title} type="title">ToDo List</ThemedText>
                 {loading ? (
-                    <ActivityIndicator style={styles.loading} animating={true}/>
+                    <ActivityIndicator style={styles.loading} animating={true} color={styles.loading.color}/>
                 ) : (
                     <FlatList
                         data={todos}
@@ -85,11 +85,11 @@ const TodosScreen = () => {
                         renderItem={({item}) => (
                             <Card style={styles.card} elevation={3} onPress={() => router.push(`../todo/${item._id}`)}>
                                 <Card.Content>
-                                    <Text variant="titleMedium">{item.title}</Text>
+                                    <Text variant="titleMedium" style={styles.cardTitle}>{item.title}</Text>
                                     <Text variant="bodyMedium" style={styles.description}>{item.description}</Text>
                                 </Card.Content>
                                 <Card.Actions>
-                                    <Button onPress={() => handleDeleteTodo(item._id)}>Delete</Button>
+                                    <Button onPress={() => handleDeleteTodo(item._id)} textColor={styles.deleteButton.color}>Delete</Button>
                                 </Card.Actions>
                             </Card>
                         )}
@@ -100,15 +100,15 @@ const TodosScreen = () => {
                     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined}
                                           style={styles.inputContainer}>
                         <TextInput label="Title" value={title} onChangeText={setTitle} style={styles.input}
-                                   mode="outlined"/>
+                                   mode="outlined" theme={{colors: {primary: styles.inputOutline.color}}}/>
                         <TextInput label="Description" value={description} onChangeText={setDescription}
-                                   style={styles.input} mode="outlined" multiline/>
-                        <Button mode="contained" onPress={handleAddTodo} style={styles.addButton}>Add Todo</Button>
-                        <Button onPress={() => setIsAdding(false)} style={styles.cancelButton}>Cancel</Button>
+                                   style={styles.input} mode="outlined" multiline theme={{colors: {primary: styles.inputOutline.color}}}/>
+                        <Button mode="contained" onPress={handleAddTodo} style={styles.addButton} buttonColor={styles.addButton.backgroundColor}>Add Todo</Button>
+                        <Button onPress={() => setIsAdding(false)} style={styles.cancelButton} textColor={styles.cancelButton.color}>Cancel</Button>
                     </KeyboardAvoidingView>
                 )}
                 {!isAdding && (
-                    <FAB style={styles.fab} icon="plus" onPress={() => setIsAdding(true)} label="Add Todo"/>
+                    <FAB style={styles.fab} icon="plus" onPress={() => setIsAdding(true)} color={styles.fab.color} label="Add Todo" />
                 )}
                 <Portal>
                     <Dialog visible={dialogVisible} onDismiss={() => setDialogVisible(false)}>
@@ -130,10 +130,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingTop: Constants.statusBarHeight,
+        backgroundColor: '#001f3f', 
     },
     title: {
         marginTop: 16,
         marginHorizontal: 16,
+        color: '#FFD700', 
     },
     listContainer: {
         padding: 16,
@@ -141,35 +143,53 @@ const styles = StyleSheet.create({
     card: {
         marginBottom: 16,
         borderRadius: 8,
+        backgroundColor: '#002b80', 
+    },
+    cardTitle: {
+        color: '#FFD700', 
     },
     description: {
         marginTop: 8,
-        color: 'gray',
+        color: '#FFFFFF', 
+    },
+    deleteButton: {
+        color: '#FF4500', 
     },
     fab: {
         position: 'absolute',
         right: 16,
         bottom: 16,
+        backgroundColor: '#FFD700', 
+        color: '#000000', 
     },
     inputContainer: {
         padding: 16,
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
         elevation: 5,
+        backgroundColor: '#001f3f',
     },
     input: {
         marginBottom: 12,
+        backgroundColor: '#FFFFFF',
+    },
+    inputOutline: {
+        color: '#FFD700',
     },
     addButton: {
         marginTop: 12,
+        backgroundColor: '#FFD700',
+        color: '#000000',
     },
     cancelButton: {
         marginTop: 8,
+        color: '#FFFFFF',
     },
     loading: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        color: '#FFD700',
     },
 });
 

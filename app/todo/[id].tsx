@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet} from 'react-native';
+import React, { useEffect, useState } from "react";
+import { StyleSheet } from "react-native";
 import {
     ActivityIndicator,
     Button,
@@ -8,14 +8,14 @@ import {
     Portal,
     Provider as PaperProvider,
     Text,
-    TextInput
-} from 'react-native-paper';
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Stack, useLocalSearchParams, useRouter} from 'expo-router';
-import API_URL from '@/config/config';
-import {ThemedView} from '@/components/ThemedView';
-import {useTodos} from '@/context/TodoContext';
+    TextInput,
+} from "react-native-paper";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Stack, useLocalSearchParams, useRouter } from "expo-router";
+import API_URL from "@/config/config";
+import { ThemedView } from "@/components/ThemedView";
+import { useTodos } from "@/context/TodoContext";
 
 type Todo = {
     _id: string;
@@ -27,8 +27,8 @@ const TodoDetailScreen = () => {
     const { id } = useLocalSearchParams<{ id: string }>();
     const { updateTodo } = useTodos();
     const [todo, setTodo] = useState<Todo | null>(null);
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
     const [visible, setVisible] = useState(false);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
@@ -40,7 +40,7 @@ const TodoDetailScreen = () => {
     const fetchTodo = async () => {
         setLoading(true);
         try {
-            const token = await AsyncStorage.getItem('token');
+            const token = await AsyncStorage.getItem("token");
             const response = await axios.get<{ data: Todo }>(`${API_URL}/api/todos/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
@@ -49,7 +49,7 @@ const TodoDetailScreen = () => {
             setTitle(fetchedTodo.title);
             setDescription(fetchedTodo.description);
         } catch (error) {
-            console.error('Failed to fetch todo', error);
+            console.error("Failed to fetch todo", error);
         } finally {
             setLoading(false);
         }
@@ -57,7 +57,7 @@ const TodoDetailScreen = () => {
 
     const handleUpdateTodo = async () => {
         try {
-            const token = await AsyncStorage.getItem('token');
+            const token = await AsyncStorage.getItem("token");
             const response = await axios.put<{ data: Todo }>(
                 `${API_URL}/api/todos/${id}`,
                 { title, description },
@@ -68,7 +68,7 @@ const TodoDetailScreen = () => {
             updateTodo(updatedTodo);
             setVisible(true);
         } catch (error) {
-            console.error('Failed to update todo', error);
+            console.error("Failed to update todo", error);
         }
     };
 
@@ -81,7 +81,7 @@ const TodoDetailScreen = () => {
         return (
             <PaperProvider>
                 <ThemedView style={styles.container}>
-                    <ActivityIndicator style={styles.loading} animating={true} />
+                    <ActivityIndicator style={styles.loading} animating={true} color="#FFC107" />
                 </ThemedView>
             </PaperProvider>
         );
@@ -93,7 +93,7 @@ const TodoDetailScreen = () => {
 
     return (
         <PaperProvider>
-            <Stack.Screen options={{ title: 'Todo Detail' }} />
+            <Stack.Screen options={{ title: "Todo Detail" }} />
             <ThemedView style={styles.container}>
                 <Card style={styles.card} elevation={3}>
                     <Card.Content>
@@ -103,6 +103,7 @@ const TodoDetailScreen = () => {
                             onChangeText={setTitle}
                             style={styles.input}
                             mode="outlined"
+                            theme={{ colors: { text: "#000000", placeholder: "#FFC107", background: "#FFFFFF", outline: "#FFC107" } }}
                         />
                         <TextInput
                             label="Description"
@@ -111,20 +112,29 @@ const TodoDetailScreen = () => {
                             style={styles.input}
                             mode="outlined"
                             multiline
+                            theme={{ colors: { text: "#000000", placeholder: "#FFC107", background: "#FFFFFF", outline: "#FFC107" } }}
                         />
-                        <Button mode="contained" onPress={handleUpdateTodo} style={styles.updateButton}>
+                        <Button
+                            mode="contained"
+                            onPress={handleUpdateTodo}
+                            style={styles.updateButton}
+                            buttonColor="#FFC107"
+                            textColor="#000000"
+                        >
                             Update Todo
                         </Button>
                     </Card.Content>
                 </Card>
                 <Portal>
-                    <Dialog visible={visible} onDismiss={hideDialog}>
-                        <Dialog.Title>Success</Dialog.Title>
+                    <Dialog visible={visible} onDismiss={hideDialog} style={styles.dialog}>
+                        <Dialog.Title style={styles.dialogTitle}>Success</Dialog.Title>
                         <Dialog.Content>
-                            <Text>Todo updated successfully</Text>
+                            <Text style={styles.dialogText}>Todo updated successfully</Text>
                         </Dialog.Content>
                         <Dialog.Actions>
-                            <Button onPress={hideDialog}>OK</Button>
+                            <Button onPress={hideDialog} textColor="#FFC107">
+                                OK
+                            </Button>
                         </Dialog.Actions>
                     </Dialog>
                 </Portal>
@@ -137,10 +147,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 16,
+        backgroundColor: "#002147",
     },
     card: {
         marginBottom: 16,
         borderRadius: 8,
+        backgroundColor: "#1E1E1E",
     },
     input: {
         marginBottom: 12,
@@ -150,8 +162,17 @@ const styles = StyleSheet.create({
     },
     loading: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    dialog: {
+        backgroundColor: "#1E1E1E",
+    },
+    dialogTitle: {
+        color: "#FFC107",
+    },
+    dialogText: {
+        color: "#FFC107",
     },
 });
 

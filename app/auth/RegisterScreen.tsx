@@ -1,9 +1,9 @@
-import React, {useState} from "react";
-import {StyleSheet, Text, TextInput, TouchableOpacity} from "react-native";
-import {useRouter} from "expo-router";
+import React, { useState } from "react";
+import { StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
+import { useRouter } from "expo-router";
 import axios from "axios";
-import {ThemedView} from "@/components/ThemedView";
-import {Button, Dialog, PaperProvider, Portal} from "react-native-paper";
+import { ThemedView } from "@/components/ThemedView";
+import { Button, Dialog, PaperProvider, Portal } from "react-native-paper";
 import API_URL from "../../config/config";
 
 export default function RegisterScreen() {
@@ -16,7 +16,7 @@ export default function RegisterScreen() {
 
     const handleRegister = async () => {
         try {
-            await axios.post(`${API_URL}/api/auth/register`, {username, password, email});
+            await axios.post(`${API_URL}/api/auth/register`, { username, password, email });
             router.replace("/auth/LoginScreen");
         } catch (error) {
             const errorMessage = (error as any).response?.data?.message || "An error occurred";
@@ -36,6 +36,7 @@ export default function RegisterScreen() {
                     value={username}
                     onChangeText={setUsername}
                     autoCapitalize="none"
+                    placeholderTextColor="#B3B3B3"
                 />
                 <TextInput
                     style={styles.input}
@@ -44,6 +45,7 @@ export default function RegisterScreen() {
                     onChangeText={setEmail}
                     keyboardType="email-address"
                     autoCapitalize="none"
+                    placeholderTextColor="#B3B3B3"
                 />
                 <TextInput
                     style={styles.input}
@@ -51,6 +53,7 @@ export default function RegisterScreen() {
                     value={password}
                     onChangeText={setPassword}
                     secureTextEntry
+                    placeholderTextColor="#B3B3B3"
                 />
                 <TouchableOpacity style={styles.registerButton} onPress={handleRegister}>
                     <Text style={styles.registerButtonText}>Register</Text>
@@ -80,55 +83,66 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         padding: 16,
-        backgroundColor: "#f9f9f9",
+        backgroundColor: "#0D1117", 
     },
     title: {
-        fontSize: 24,
+        fontSize: 28,
         fontWeight: "bold",
-        marginBottom: 24,
-        color: "#333",
+        marginBottom: 12,
+        color: "#FFFF00", 
     },
     subtitle: {
-        fontSize: 16,
-        color: "#666",
+        fontSize: 18,
+        color: "#C9D1D9", 
         marginBottom: 24,
     },
     input: {
         width: "100%",
-        height: 48,
-        borderColor: "#ccc",
+        height: 50,
+        borderColor: "#30363D", 
         borderWidth: 1,
-        borderRadius: 8,
+        borderRadius: 10,
         paddingHorizontal: 12,
         marginBottom: 16,
-        backgroundColor: "#fff",
+        backgroundColor: "#161B22", 
+        color: "#C9D1D9", 
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 2,
     },
     registerButton: {
         width: "100%",
-        height: 48,
-        backgroundColor: "#007BFF",
-        borderRadius: 8,
+        height: 50,
+        backgroundColor: "#005BBB", 
+        borderRadius: 10,
         justifyContent: "center",
         alignItems: "center",
         marginBottom: 16,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+        elevation: 4,
     },
     registerButtonText: {
-        color: "#fff",
-        fontSize: 16,
+        color: "#FFFFFF", 
+        fontSize: 18,
         fontWeight: "600",
     },
     loginButton: {
         width: "100%",
-        height: 48,
+        height: 50,
         borderWidth: 1,
-        borderColor: "#007BFF",
-        borderRadius: 8,
+        borderColor: "#005BBB", 
+        borderRadius: 10,
         justifyContent: "center",
         alignItems: "center",
     },
     loginButtonText: {
-        color: "#007BFF",
-        fontSize: 16,
+        color: "#005BBB", 
+        fontSize: 18,
         fontWeight: "600",
     },
 });

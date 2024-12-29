@@ -53,17 +53,39 @@ export default function RootLayout() {
   }
 
   return (
-      <TodoProvider>
-        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-          <Stack>
-            <Stack.Screen name="auth/LoginScreen" options={{ headerShown: false }} />
-            <Stack.Screen name="auth/RegisterScreen" options={{ headerShown: false }} />
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="todo/[id]" />
-            <Stack.Screen name="+not-found" />
-          </Stack>
-          <StatusBar style="auto" />
-        </ThemeProvider>
-      </TodoProvider>
+    <TodoProvider>
+      <ThemeProvider
+        value={colorScheme === 'dark' ? {
+          ...DarkTheme,
+          colors: {
+            ...DarkTheme.colors,
+            primary: '#FFCC00',
+            background: '#2E2E2E',
+            card: '#373737',
+            text: '#FFCC00',
+            border: '#4A4A4A',
+          },
+        } : {
+          ...DefaultTheme,
+          colors: {
+            ...DefaultTheme.colors,
+            primary: '#FFCC00',
+            background: '#F5F5F5',
+            card: '#FFFFFF',
+            text: '#000000',
+            border: '#DDDDDD',
+          },
+        }}
+      >
+        <Stack>
+          <Stack.Screen name="auth/LoginScreen" options={{ headerShown: false }} />
+          <Stack.Screen name="auth/RegisterScreen" options={{ headerShown: false }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="todo/[id]" />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+        <StatusBar style="auto" />
+      </ThemeProvider>
+    </TodoProvider>
   );
 }
